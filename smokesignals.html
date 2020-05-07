@@ -39,7 +39,7 @@
                 oldImageData = newImageData = outputImageData = ctx.getImageData(0, 0, width, height);
 
 				//call draw every __ ms
-				var id = setInterval(draw, 16);
+				var id = setInterval(draw, 50);
 			}
 
             function gen_palette()
@@ -49,6 +49,8 @@
                     HSLToRGB(i/3, 255, Math.min(255, i*2));
                 }
             }
+
+
 
             function HSLToRGB(h,s,l) 
             {
@@ -82,7 +84,7 @@
                 g = Math.round((g + m) * 255);
                 b = Math.round((b + m) * 255);
 
-                console.log("rgb(" + r + "," + g + "," + b + ")");
+                //return "rgb(" + r + "," + g + "," + b + ")";
                 paletteR.push(r);
                 paletteG.push(g);
                 paletteB.push(b);
@@ -131,11 +133,12 @@
                             avg += oldImageData.data[(y+2)*width*4 + (x)*4];
                         }
 
+                        //avg = (avg*32)/129;
                         //avg /= 4.0625;
-                        //avg /= (129/32);
-                        avg /= 3.9;
+                        //avg /= 4.015625;
+                        avg /= 4.25;
 
-                        newImageData.data[y*width*4+x*4] = avg - 1; 
+                        newImageData.data[y*width*4+x*4] = avg; 
 					}
 				}
 
@@ -147,7 +150,6 @@
                     outputImageData.data[i+1] = paletteG[newImageData.data[i]];
                     outputImageData.data[i+2] = paletteB[newImageData.data[i]];
                     outputImageData.data[i+3] = 255;
-                    //outputImageData.data[i+3] = paletteR[newImageData.data[i]];
                 }
 
 				//put the manipulated data back
