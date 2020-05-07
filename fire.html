@@ -41,35 +41,53 @@
 				var newImageData = ctx.createImageData(myImageData);
 
 				//manipulate the data - make sure we're getting it right
-				for(var	x = 0; x < width; x++)
-				{
-					for(var y = 0; y < height; y++)
-					{
-						if(x == 0 || y == 0 || x == width-1 || y == height-1)
-						{
-						//edge pixels - sides need to read the opposite side, bottom reads random values
-							newImageData.data[y*width*4+x*4] = Math.random()*100+155;
-							newImageData.data[y*width*4+x*4 + 1] = 255;
-							newImageData.data[y*width*4+x*4 + 2] = 255;
-							newImageData.data[y*width*4+x*4 + 3] = 255;
-						}
-						else
-						{						
-							newImageData.data[y*width*4+x*4] = x % 255;
-							newImageData.data[y*width*4+x*4 + 1] = y % 255;
-							newImageData.data[y*width*4+x*4 + 2] = 255;
-							newImageData.data[y*width*4+x*4 + 3] = 255;
-						}
-					}
-				}			
-				
-	
-				//fill with random values
-				//for(var i = 0; i < (4*width*height); i++)
-				//{
-					//newImageData.data[i] = Math.random()*255;
-				//}
+                for(var	x = 0; x < width; x++)
+                {
+                    for(var y = 0; y < height; y++)
+                    {
+                        if(y == height-1)
+                        {//randomize the bottom edge
+                            newImageData.data[y*width*4+x*4] = 
+                            newImageData.data[y*width*4+x*4 + 1] = 
+                            newImageData.data[y*width*4+x*4 + 2] = 
+                            newImageData.data[y*width*4+x*4 + 3] = Math.random()*255;
+                        }
+                        else
+                        {//otherwise, do the update
+                            var avg = 0;
 
+                            if(x == 0)
+                            {
+                                avg += myImageData.data[(y+1)*width*4 + (width-1)*4];
+                                avg += myImageData.data[(y+1)*width*4 + (x)*4];
+                                avg += myImageData.data[(y+1)*width*4 + (x+1)*4];
+                                avg += myImageData.data[(y+2)*width*4 + (x)*4];
+                            }
+                            else if(x == width-1)
+                            {
+                                avg += myImageData.data[(y+1)*width*4 + (x-1)*4];
+                                avg += myImageData.data[(y+1)*width*4 + (x)*4];
+                                avg += myImageData.data[(y+1)*width*4 + (0)*4];
+                                avg += myImageData.data[(y+2)*width*4 + (x)*4];
+                            }
+                            else
+                            {
+                                avg += myImageData.data[(y+1)*width*4 + (x-1)*4];
+                                avg += myImageData.data[(y+1)*width*4 + (x)*4];
+                                avg += myImageData.data[(y+1)*width*4 + (x+1)*4];
+                                avg += myImageData.data[(y+2)*width*4 + (x)*4];
+                            }
+
+                            //avg = (avg*32)/129;
+                            avg /= 4.0;
+
+                            newImageData.data[y*width*4+x*4] = 
+                            newImageData.data[y*width*4+x*4 + 1] = 
+                            newImageData.data[y*width*4+x*4 + 2] = avg;
+                            newImageData.data[y*width*4+x*4 + 3] = 255; 
+                        }
+					}
+				}
 
 				//put the manipulated data back
 				ctx.putImageData(newImageData, 0, 0);
