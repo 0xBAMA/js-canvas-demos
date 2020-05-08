@@ -62,8 +62,7 @@
                 visit(x, y-1, r, g, b);
                 visit(x, y+1, r, g, b);
                
-                frame++;
-                if(frame % 1000 == 0)   //do this every thousand frames
+                if(!(++frame%1000))   //do this every thousand frames
                 {
                     //display the grid image
                     ctx.putImageData(gridImageData, 0, 0);
@@ -81,7 +80,7 @@
             if(gridImageData.data[j+3] == 0)
             {
                 gridImageData.data[j+0] = r + (Math.random() < 0.5 ? -1 : 1);     
-                gridImageData.data[j+1] = g + (Math.random() < 0.5 ? -1 : 1);     
+                gridImageData.data[j+1] = g + (Math.random() < 0.41 ? -1 : 1);     
                 gridImageData.data[j+2] = b + (Math.random() < 0.5 ? -1 : 1);     
                 gridImageData.data[j+3] = 255;     
                 indexes.push(i);                 
