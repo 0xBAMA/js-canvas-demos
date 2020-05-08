@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+				background-color: #161616;
+			}
+		</style>  
+
+		<script type="application/javascript">
+            var oldImageData;
+            var newImageData;
+
+			function start()
+			{
+				//get your context stuff
+				canvas = document.getElementById('canvas');
+				ctx = canvas.getContext('2d');
+				
+				//establish width, with wide border (100px all edges)
+				width = ctx.canvas.width  = window.innerWidth - 1300;
+				height = ctx.canvas.height = window.innerHeight - 500;
+
+                newImageData = ctx.createImageData(width, height);
+
+                for(var	x = 0; x < width; x++)
+                {
+                    for(var y = 0; y < height; y++)
+                    {
+                        //write your initial image data
+                        var val = Math.random() > 0.9 ? 255 : 0;
+                        newImageData.data[y*width*4+x*4+0] = val; 
+                        newImageData.data[y*width*4+x*4+1] = val;
+                        newImageData.data[y*width*4+x*4+2] = val;
+                        newImageData.data[y*width*4+x*4+3] = 255;
+					}
+				}
+                
+				//call draw every __ ms
+				var id = setInterval(draw, 50);
+			}
+
+			function draw() 
+			{
+				//get old data - that's the same as last frame's new data
+				oldImageData = newImageData; 
+
+				//new image data, with same dimensions
+				newImageData = ctx.createImageData(oldImageData);
+
+				//manipulate the data
+                for(var	x = 0; x < width; x++)
+                {
+                    for(var y = 0; y < height; y++)
+                    {
+                        //read from oldImageData.data
+                        var sum = 0;
+                        var was_live = (oldImageData.data[(y+0)*width*4+(x+0)*4] == 255) ? 1 : 0;
+
+                        sum += (oldImageData.data[(y+1)*width*4+(x+1)*4] == 255) ? 1 : 0;
+                        sum += (oldImageData.data[(y+1)*width*4+(x+0)*4] == 255) ? 1 : 0;
+                        sum += (oldImageData.data[(y+1)*width*4+(x-1)*4] == 255) ? 1 : 0;
+                        
+                        sum += (oldImageData.data[(y+0)*width*4+(x+1)*4] == 255) ? 1 : 0;
+                        sum += (oldImageData.data[(y+0)*width*4+(x-1)*4] == 255) ? 1 : 0;
+                        
+                        sum += (oldImageData.data[(y-1)*width*4+(x+1)*4] == 255) ? 1 : 0;
+                        sum += (oldImageData.data[(y-1)*width*4+(x+0)*4] == 255) ? 1 : 0;
+                        sum += (oldImageData.data[(y-1)*width*4+(x-1)*4] == 255) ? 1 : 0;
+
+                        //do your computation
+                        var is_live = (was_live && sum < 2) || (was_live && sum > 3) || (!was_live && sum == 3);
+
+                        //cell lives when it has either 2 or three neighbors
+                        newImageData.data[y*width*4+x*4+0] = is_live ? 255 : 0;
+                        newImageData.data[y*width*4+x*4+1] = is_live ? 255 : 0;
+                        newImageData.data[y*width*4+x*4+2] = is_live ? 255 : 0;
+                        newImageData.data[y*width*4+x*4+3] = 255;
+                        
+					}
+				}
+
+                //display the current data
+				ctx.putImageData(newImageData, 0, 0);
+			}
+		</script>
+	</head>
+	<body onload="start();">
+	</body>
+	<canvas id="canvas" style='position:absolute; left:650px; top:250px;'></canvas>
+</html>
