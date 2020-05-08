@@ -48,15 +48,15 @@
                 //}
     
                 for(var n = 0; n < 400; n += 14)
-                for(var i = 0; i < 200; i += 5)
+                for(var i = 0; i < 200; i += 9)
                 {
                     draw_diode(10+n,10+i);
 
                     //add some vertical connections
-                    if(Math.random() < 0.1)
+                    if(Math.random() < 0.3)
                     {
                         var x = 10+n;
-                        for(var y = 10+i; y < 15+i; y++)
+                        for(var y = 10+i; y < 19+i; y++)
                         {
                             newImageData.data[y*width*4 + x*4 + 0] = 0;
                             newImageData.data[y*width*4 + x*4 + 1] = 0;
@@ -67,13 +67,13 @@
                 }
 
                 //random erode
-                /*for(var	x = 0; x < width; x++)
+                for(var	x = 0; x < width; x++)
                 {
                     for(var y = 0; y < height; y++)
                     {
                         if(newImageData.data[y*width*4+x*4+3] == 255)
                         {
-                            if(Math.random() < 0.1)
+                            if(Math.random() < 0.01)
                             {
                                 newImageData.data[y*width*4 + x*4 + 0] = 0;
                                 newImageData.data[y*width*4 + x*4 + 1] = 0;
@@ -82,7 +82,61 @@
                             }
                         }
                     }
-                }*/
+                }
+
+                for(var o = 0; o < 20; o++)
+                for(var i = 0; i <  4; i++)
+                {
+                    newImageData.data[(300+16*i)*width*4 + (o+35)*4 + 0] = 0;
+                    newImageData.data[(300+16*i)*width*4 + (o+35)*4 + 1] = 0;
+                    newImageData.data[(300+16*i)*width*4 + (o+35)*4 + 2] = 0;
+                    newImageData.data[(300+16*i)*width*4 + (o+35)*4 + 3] = 255;
+
+                    newImageData.data[(306+16*i)*width*4 + (o+35)*4 + 0] = 0; 
+                    newImageData.data[(306+16*i)*width*4 + (o+35)*4 + 1] = 0;
+                    newImageData.data[(306+16*i)*width*4 + (o+35)*4 + 2] = 0;
+                    newImageData.data[(306+16*i)*width*4 + (o+35)*4 + 3] = 255;
+                
+                    newImageData.data[(300+16*i)*width*4 + (o+61)*4 + 0] = 0;
+                    newImageData.data[(300+16*i)*width*4 + (o+61)*4 + 1] = 0;
+                    newImageData.data[(300+16*i)*width*4 + (o+61)*4 + 2] = 0;
+                    newImageData.data[(300+16*i)*width*4 + (o+61)*4 + 3] = 255;
+
+                    newImageData.data[(306+16*i)*width*4 + (o+61)*4 + 0] = 0; 
+                    newImageData.data[(306+16*i)*width*4 + (o+61)*4 + 1] = 0;
+                    newImageData.data[(306+16*i)*width*4 + (o+61)*4 + 2] = 0;
+                    newImageData.data[(306+16*i)*width*4 + (o+61)*4 + 3] = 255;
+          
+                    newImageData.data[(299+16*i)*width*4 + (o+106)*4 + 0] = 0;
+                    newImageData.data[(299+16*i)*width*4 + (o+106)*4 + 1] = 0;
+                    newImageData.data[(299+16*i)*width*4 + (o+106)*4 + 2] = 0;
+                    newImageData.data[(299+16*i)*width*4 + (o+106)*4 + 3] = 255;
+
+                    newImageData.data[(307+16*i)*width*4 + (o+106)*4 + 0] = 0; 
+                    newImageData.data[(307+16*i)*width*4 + (o+106)*4 + 1] = 0;
+                    newImageData.data[(307+16*i)*width*4 + (o+106)*4 + 2] = 0;
+                    newImageData.data[(307+16*i)*width*4 + (o+106)*4 + 3] = 255;
+                    
+                    newImageData.data[(303+16*i)*width*4 + (o+132)*4 + 0] = 0; 
+                    newImageData.data[(303+16*i)*width*4 + (o+132)*4 + 1] = 0;
+                    newImageData.data[(303+16*i)*width*4 + (o+132)*4 + 2] = 0;
+                    newImageData.data[(303+16*i)*width*4 + (o+132)*4 + 3] = 255;
+                    
+                }
+
+
+
+
+                for(var i = 0; i < 4; i++)
+                {
+                    draw_crossing(55, 300+16*i);
+                    draw_diode(73, 300+16*i);
+                    draw_diode(73, 306+16*i);
+                    draw_crossing(85, 300+16*i);
+                    draw_diode(92, 300+16*i);
+                    draw_diode(92, 306+16*i);
+                    draw_sr_ff(126, 299+16*i);
+                }
 
                 
 				ctx.putImageData(newImageData, 0, 0);
@@ -91,11 +145,172 @@
 				var id = setInterval(draw, 50);
 			}
 
+            function draw_sr_ff(x,y)
+            {
+                newImageData.data[(y)*width*4 + (x)*4 + 0] = 0;
+                newImageData.data[(y)*width*4 + (x)*4 + 1] = 0;
+                newImageData.data[(y)*width*4 + (x)*4 + 2] = 0;
+                newImageData.data[(y)*width*4 + (x)*4 + 3] = 255;
+
+                newImageData.data[(y)*width*4 + (x+1)*4 + 0] = 0;
+                newImageData.data[(y)*width*4 + (x+1)*4 + 1] = 0;
+                newImageData.data[(y)*width*4 + (x+1)*4 + 2] = 0;
+                newImageData.data[(y)*width*4 + (x+1)*4 + 3] = 255;
+          
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 0] = 0;
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 1] = 0;
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 2] = 0;
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 3] = 255;
+                
+                for(var i = 1; i < 4; i++)
+                {
+                    newImageData.data[(y+2)*width*4 + (x+i)*4 + 0] = 0;
+                    newImageData.data[(y+2)*width*4 + (x+i)*4 + 1] = 0;
+                    newImageData.data[(y+2)*width*4 + (x+i)*4 + 2] = 0;
+                    newImageData.data[(y+2)*width*4 + (x+i)*4 + 3] = 255;
+                }
+                
+                newImageData.data[(y+3)*width*4 + (x+2)*4 + 0] = 0;
+                newImageData.data[(y+3)*width*4 + (x+2)*4 + 1] = 0;
+                newImageData.data[(y+3)*width*4 + (x+2)*4 + 2] = 0;
+                newImageData.data[(y+3)*width*4 + (x+2)*4 + 3] = 255;
+
+                newImageData.data[(y+4)*width*4 + (x+1)*4 + 0] = 0;
+                newImageData.data[(y+4)*width*4 + (x+1)*4 + 1] = 0;
+                newImageData.data[(y+4)*width*4 + (x+1)*4 + 2] = 0;
+                newImageData.data[(y+4)*width*4 + (x+1)*4 + 3] = 255;
+
+                newImageData.data[(y+5)*width*4 + (x+1)*4 + 0] = 0;
+                newImageData.data[(y+5)*width*4 + (x+1)*4 + 1] = 0;
+                newImageData.data[(y+5)*width*4 + (x+1)*4 + 2] = 0;
+                newImageData.data[(y+5)*width*4 + (x+1)*4 + 3] = 255;
+
+                newImageData.data[(y+5)*width*4 + (x+3)*4 + 0] = 0;
+                newImageData.data[(y+5)*width*4 + (x+3)*4 + 1] = 0;
+                newImageData.data[(y+5)*width*4 + (x+3)*4 + 2] = 0;
+                newImageData.data[(y+5)*width*4 + (x+3)*4 + 3] = 255;
+
+                for(var i = 3; i < 6; i++)
+                {
+                    newImageData.data[(y+4)*width*4 + (x+i)*4 + 0] = 0;
+                    newImageData.data[(y+4)*width*4 + (x+i)*4 + 1] = 0;
+                    newImageData.data[(y+4)*width*4 + (x+i)*4 + 2] = 0;
+                    newImageData.data[(y+4)*width*4 + (x+i)*4 + 3] = 255;
+                }
+
+                for(var i = 0; i < 3; i++)
+                {
+                    newImageData.data[(y+6)*width*4 + (x+i)*4 + 0] = 0;
+                    newImageData.data[(y+6)*width*4 + (x+i)*4 + 1] = 0;
+                    newImageData.data[(y+6)*width*4 + (x+i)*4 + 2] = 0;
+                    newImageData.data[(y+6)*width*4 + (x+i)*4 + 3] = 255;
+                }
+
+                newImageData.data[(y+7)*width*4 + (x+1)*4 + 0] = 0;
+                newImageData.data[(y+7)*width*4 + (x+1)*4 + 1] = 0;
+                newImageData.data[(y+7)*width*4 + (x+1)*4 + 2] = 0;
+                newImageData.data[(y+7)*width*4 + (x+1)*4 + 3] = 255;
+
+                newImageData.data[(y+8)*width*4 + (x+0)*4 + 0] = 0;
+                newImageData.data[(y+8)*width*4 + (x+0)*4 + 1] = 0;
+                newImageData.data[(y+8)*width*4 + (x+0)*4 + 2] = 0;
+                newImageData.data[(y+8)*width*4 + (x+0)*4 + 3] = 255;
+            }
+
+            function draw_crossing(x,y)
+            {
+                newImageData.data[(y)*width*4 + (x)*4 + 0] = 0;
+                newImageData.data[(y)*width*4 + (x)*4 + 1] = 0;
+                newImageData.data[(y)*width*4 + (x)*4 + 2] = 0;
+                newImageData.data[(y)*width*4 + (x)*4 + 3] = 255;
+                
+                newImageData.data[(y)*width*4 + (x+1)*4 + 0] = 0;
+                newImageData.data[(y)*width*4 + (x+1)*4 + 1] = 0;
+                newImageData.data[(y)*width*4 + (x+1)*4 + 2] = 0;
+                newImageData.data[(y)*width*4 + (x+1)*4 + 3] = 255;
+
+                newImageData.data[(y)*width*4 + (x+7)*4 + 0] = 0;
+                newImageData.data[(y)*width*4 + (x+7)*4 + 1] = 0;
+                newImageData.data[(y)*width*4 + (x+7)*4 + 2] = 0;
+                newImageData.data[(y)*width*4 + (x+7)*4 + 3] = 255;
+
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 0] = 0;
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 1] = 0;
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 2] = 0;
+                newImageData.data[(y+1)*width*4 + (x+2)*4 + 3] = 255;
+          
+                newImageData.data[(y+1)*width*4 + (x+4)*4 + 0] = 0;
+                newImageData.data[(y+1)*width*4 + (x+4)*4 + 1] = 0;
+                newImageData.data[(y+1)*width*4 + (x+4)*4 + 2] = 0;
+                newImageData.data[(y+1)*width*4 + (x+4)*4 + 3] = 255;
+          
+                newImageData.data[(y+1)*width*4 + (x+6)*4 + 0] = 0;
+                newImageData.data[(y+1)*width*4 + (x+6)*4 + 1] = 0;
+                newImageData.data[(y+1)*width*4 + (x+6)*4 + 2] = 0;
+                newImageData.data[(y+1)*width*4 + (x+6)*4 + 3] = 255;
+          
+                for(var i = 0 ; i < 5; i++)
+                {
+                    newImageData.data[(y+2)*width*4 + (x+1+i)*4 + 0] = 0;
+                    newImageData.data[(y+2)*width*4 + (x+1+i)*4 + 1] = 0;
+                    newImageData.data[(y+2)*width*4 + (x+1+i)*4 + 2] = 0;
+                    newImageData.data[(y+2)*width*4 + (x+1+i)*4 + 3] = 255;
+
+                    newImageData.data[(y+4)*width*4 + (x+1+i)*4 + 0] = 0;
+                    newImageData.data[(y+4)*width*4 + (x+1+i)*4 + 1] = 0;
+                    newImageData.data[(y+4)*width*4 + (x+1+i)*4 + 2] = 0;
+                    newImageData.data[(y+4)*width*4 + (x+1+i)*4 + 3] = 255;
+                }
+          
+                newImageData.data[(y+3)*width*4 + (x+1)*4 + 0] = 0;
+                newImageData.data[(y+3)*width*4 + (x+1)*4 + 1] = 0;
+                newImageData.data[(y+3)*width*4 + (x+1)*4 + 2] = 0;
+                newImageData.data[(y+3)*width*4 + (x+1)*4 + 3] = 255;
+          
+                newImageData.data[(y+3)*width*4 + (x+4)*4 + 0] = 0;
+                newImageData.data[(y+3)*width*4 + (x+4)*4 + 1] = 0;
+                newImageData.data[(y+3)*width*4 + (x+4)*4 + 2] = 0;
+                newImageData.data[(y+3)*width*4 + (x+4)*4 + 3] = 255;
+          
+                newImageData.data[(y+5)*width*4 + (x+2)*4 + 0] = 0;
+                newImageData.data[(y+5)*width*4 + (x+2)*4 + 1] = 0;
+                newImageData.data[(y+5)*width*4 + (x+2)*4 + 2] = 0;
+                newImageData.data[(y+5)*width*4 + (x+2)*4 + 3] = 255;
+          
+                newImageData.data[(y+5)*width*4 + (x+4)*4 + 0] = 0;
+                newImageData.data[(y+5)*width*4 + (x+4)*4 + 1] = 0;
+                newImageData.data[(y+5)*width*4 + (x+4)*4 + 2] = 0;
+                newImageData.data[(y+5)*width*4 + (x+4)*4 + 3] = 255;
+          
+                newImageData.data[(y+5)*width*4 + (x+6)*4 + 0] = 0;
+                newImageData.data[(y+5)*width*4 + (x+6)*4 + 1] = 0;
+                newImageData.data[(y+5)*width*4 + (x+6)*4 + 2] = 0;
+                newImageData.data[(y+5)*width*4 + (x+6)*4 + 3] = 255;
+          
+                newImageData.data[(y+6)*width*4 + (x+1)*4 + 0] = 0;
+                newImageData.data[(y+6)*width*4 + (x+1)*4 + 1] = 0;
+                newImageData.data[(y+6)*width*4 + (x+1)*4 + 2] = 0;
+                newImageData.data[(y+6)*width*4 + (x+1)*4 + 3] = 255;
+
+                newImageData.data[(y+6)*width*4 + (x)*4 + 0] = 0;
+                newImageData.data[(y+6)*width*4 + (x)*4 + 1] = 0;
+                newImageData.data[(y+6)*width*4 + (x)*4 + 2] = 0;
+                newImageData.data[(y+6)*width*4 + (x)*4 + 3] = 255;
+                
+                newImageData.data[(y+6)*width*4 + (x+7)*4 + 0] = 0;
+                newImageData.data[(y+6)*width*4 + (x+7)*4 + 1] = 0;
+                newImageData.data[(y+6)*width*4 + (x+7)*4 + 2] = 0;
+                newImageData.data[(y+6)*width*4 + (x+7)*4 + 3] = 255;
+
+          }
+
+
             function draw_diode(x, y)
             {
-            
-                newImageData.data[y*width*4 + x*4 + 0] = 255;
-                newImageData.data[y*width*4 + x*4 + 1] = 255;
+                
+                //set this to 255 255 0 255 to init with electron head
+                newImageData.data[y*width*4 + x*4 + 0] = 0;
+                newImageData.data[y*width*4 + x*4 + 1] = 0;
                 newImageData.data[y*width*4 + x*4 + 2] = 0;
                 newImageData.data[y*width*4 + x*4 + 3] = 255;
                 
@@ -211,7 +426,19 @@
                     newImageData.data[(10+i)*width*4 + 10*4 + 2] = 0;
                     newImageData.data[(10+i)*width*4 + 10*4 + 3] = 255;
                 }
-                
+               
+                for(var i = 0; i < 4; i++)
+                {
+                    newImageData.data[(300+16*i)*width*4 + 35*4 + 0] = Math.random()*256;   
+                    newImageData.data[(300+16*i)*width*4 + 35*4 + 1] = 0;
+                    newImageData.data[(300+16*i)*width*4 + 35*4 + 2] = 0;
+                    newImageData.data[(300+16*i)*width*4 + 35*4 + 3] = 255;
+
+                    newImageData.data[(306+16*i)*width*4 + 35*4 + 0] = Math.random()*256;   
+                    newImageData.data[(306+16*i)*width*4 + 35*4 + 1] = 0;
+                    newImageData.data[(306+16*i)*width*4 + 35*4 + 2] = 0;
+                    newImageData.data[(306+16*i)*width*4 + 35*4 + 3] = 255;
+                }
 
                 //display the current data
 				ctx.putImageData(newImageData, 0, 0);
