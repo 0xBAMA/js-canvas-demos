@@ -28,43 +28,109 @@
 
                 newImageData = ctx.createImageData(width, height);
 
-                for(var	x = 0; x < width; x++)
+                //for(var	x = 0; x < width; x++)
+                //{
+                    //for(var y = 0; y < height; y++)
+                    //{
+                        for(var i = 0; i < 200; i++)
+                        {
+                        //newImageData.data[(10+i)*width*4 + 10*4 + 0] = 0;
+                        //newImageData.data[(10+i)*width*4 + 10*4 + 1] = 0;
+                        //newImageData.data[(10+i)*width*4 + 10*4 + 2] = 0;
+                        //newImageData.data[(10+i)*width*4 + 10*4 + 3] = 255;
+
+                        newImageData.data[(10+i)*width*4 + 415*4 + 0] = 0;
+                        newImageData.data[(10+i)*width*4 + 415*4 + 1] = 0;
+                        newImageData.data[(10+i)*width*4 + 415*4 + 2] = 0;
+                        newImageData.data[(10+i)*width*4 + 415*4 + 3] = 255;
+                        }
+                    //}
+                //}
+    
+                for(var n = 0; n < 400; n += 14)
+                for(var i = 0; i < 200; i += 5)
+                {
+                    draw_diode(10+n,10+i);
+
+                    //add some vertical connections
+                    if(Math.random() < 0.1)
+                    {
+                        var x = 10+n;
+                        for(var y = 10+i; y < 15+i; y++)
+                        {
+                            newImageData.data[y*width*4 + x*4 + 0] = 0;
+                            newImageData.data[y*width*4 + x*4 + 1] = 0;
+                            newImageData.data[y*width*4 + x*4 + 2] = 0;
+                            newImageData.data[y*width*4 + x*4 + 3] = 255;
+                        }
+                    }
+                }
+
+                //random erode
+                /*for(var	x = 0; x < width; x++)
                 {
                     for(var y = 0; y < height; y++)
                     {
-                        var sample = Math.random();
-                        if((x%15==0 || y%25==0) && x > 102)
+                        if(newImageData.data[y*width*4+x*4+3] == 255)
                         {
-                            if(sample > 0.999)
+                            if(Math.random() < 0.1)
                             {
-                                newImageData.data[y*width*4+x*4+0] = 255; 
-                                newImageData.data[y*width*4+x*4+1] = 255;
-                                newImageData.data[y*width*4+x*4+2] = 0;
-                                newImageData.data[y*width*4+x*4+3] = 255;
+                                newImageData.data[y*width*4 + x*4 + 0] = 0;
+                                newImageData.data[y*width*4 + x*4 + 1] = 0;
+                                newImageData.data[y*width*4 + x*4 + 2] = 0;
+                                newImageData.data[y*width*4 + x*4 + 3] = 0;
                             }
-                            else
-                            {
-                                newImageData.data[y*width*4+x*4+0] = 0; 
-                                newImageData.data[y*width*4+x*4+1] = 0;
-                                newImageData.data[y*width*4+x*4+2] = 0;
-                                newImageData.data[y*width*4+x*4+3] = 255;
-                            }
-                        }
-                        else
-                        {
-                            newImageData.data[y*width*4+x*4+0] = 0; 
-                            newImageData.data[y*width*4+x*4+1] = 0;
-                            newImageData.data[y*width*4+x*4+2] = 0;
-                            newImageData.data[y*width*4+x*4+3] = 0;
                         }
                     }
-				}
+                }*/
 
+                
 				ctx.putImageData(newImageData, 0, 0);
 
 				//call draw every __ ms
 				var id = setInterval(draw, 50);
 			}
+
+            function draw_diode(x, y)
+            {
+            
+                newImageData.data[y*width*4 + x*4 + 0] = 255;
+                newImageData.data[y*width*4 + x*4 + 1] = 255;
+                newImageData.data[y*width*4 + x*4 + 2] = 0;
+                newImageData.data[y*width*4 + x*4 + 3] = 255;
+                
+                for(var i = 1; i < 9; i++)
+                {
+                    newImageData.data[y*width*4 + (x+i)*4 + 0] = 0;
+                    newImageData.data[y*width*4 + (x+i)*4 + 1] = 0;
+                    newImageData.data[y*width*4 + (x+i)*4 + 2] = 0;
+                    newImageData.data[y*width*4 + (x+i)*4 + 3] = 255;
+                }
+
+                for(var i = 8; i < 10; i++)
+                {
+                    newImageData.data[(y-1)*width*4 + (x+i)*4 + 0] = 0;
+                    newImageData.data[(y-1)*width*4 + (x+i)*4 + 1] = 0;
+                    newImageData.data[(y-1)*width*4 + (x+i)*4 + 2] = 0;
+                    newImageData.data[(y-1)*width*4 + (x+i)*4 + 3] = 255;
+
+                    newImageData.data[(y+1)*width*4 + (x+i)*4 + 0] = 0;
+                    newImageData.data[(y+1)*width*4 + (x+i)*4 + 1] = 0;
+                    newImageData.data[(y+1)*width*4 + (x+i)*4 + 2] = 0;
+                    newImageData.data[(y+1)*width*4 + (x+i)*4 + 3] = 255;
+                }
+          
+          
+                for(var i = 10; i < 14; i++)
+                {
+                    newImageData.data[y*width*4 + (x+i)*4 + 0] = 0;
+                    newImageData.data[y*width*4 + (x+i)*4 + 1] = 0;
+                    newImageData.data[y*width*4 + (x+i)*4 + 2] = 0;
+                    newImageData.data[y*width*4 + (x+i)*4 + 3] = 255;
+                }
+
+                
+            }
 
 			function draw() 
 			{
@@ -137,6 +203,15 @@
                         }
 					}
 				}
+
+                for(var i = 0; i < 200; i++)
+                {
+                    newImageData.data[(10+i)*width*4 + 10*4 + 0] = Math.random()*256;   //value is clamped behind the scenes
+                    newImageData.data[(10+i)*width*4 + 10*4 + 1] = 0;
+                    newImageData.data[(10+i)*width*4 + 10*4 + 2] = 0;
+                    newImageData.data[(10+i)*width*4 + 10*4 + 3] = 255;
+                }
+                
 
                 //display the current data
 				ctx.putImageData(newImageData, 0, 0);
